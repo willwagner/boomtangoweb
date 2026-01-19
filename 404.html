@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - BoomTango</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        // Redirect /invite/{code} URLs to invite.html
+        if (window.location.pathname.startsWith('/invite/')) {
+            const code = window.location.pathname.replace('/invite/', '');
+            window.location.href = `/invite.html?code=${encodeURIComponent(code)}`;
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <img src="icon.png" alt="BoomTango Icon">
+                    <span class="logo-text"><span class="logo-boom">Boom</span><span class="logo-tango">Tango</span></span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link">Home</a></li>
+                    <li><a href="help.html" class="nav-link">Help</a></li>
+                    <li><a href="terms.html" class="nav-link">Terms of Use</a></li>
+                    <li><a href="privacy.html" class="nav-link">Privacy</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-content">
+            <div class="container" style="text-align: center;">
+                <h1>404 - Page Not Found</h1>
+                <p style="font-size: 1.2rem; margin: 2rem 0;">Sorry, the page you're looking for doesn't exist.</p>
+                <p><a href="index.html" class="btn btn-primary">Return to Home</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 BoomTango. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="about.html">About Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

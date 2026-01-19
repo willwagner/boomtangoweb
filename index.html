@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BoomTango - Plan Get-Togethers with Friends</title>
+    <meta name="description" content="BoomTango makes it easy for friends to plan get-togethers. Download the iOS app and start connecting with your friends today.">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="index.html" class="logo">
+                    <img src="icon.png" alt="BoomTango Icon">
+                    <span class="logo-text"><span class="logo-boom">Boom</span><span class="logo-tango">Tango</span></span>
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="index.html" class="nav-link active">Home</a></li>
+                    <li><a href="help.html" class="nav-link">Help</a></li>
+                    <li><a href="terms.html" class="nav-link">Terms of Use</a></li>
+                    <li><a href="privacy.html" class="nav-link">Privacy</a></li>
+                    <li><a href="about.html" class="nav-link">About Us</a></li>
+                </ul>
+                <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Plan Get-Togethers with Friends</h1>
+                <p class="hero-subtitle"><span class="logo-boom">Boom</span><span class="logo-tango">Tango</span> makes it easy to coordinate and plan events with your friends. Download the iOS app and start connecting today.</p>
+                <div class="cta-buttons">
+                    <a href="https://apps.apple.com/app/boomtango" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Download on App Store</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2>Why <span class="logo-boom">Boom</span><span class="logo-tango">Tango</span>?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3>Easy Planning</h3>
+                        <p>Coordinate schedules and plan events effortlessly with your friend group.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>Stay Connected</h3>
+                        <p>Keep all your friends in the loop with real-time updates and notifications.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🎉</div>
+                        <h3>Never Miss Out</h3>
+                        <p>Get notified about upcoming events and never miss a get-together again.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="invite-section">
+            <div class="container">
+                <h2>Invite Your Friends</h2>
+                <p>Share an invite link to connect with your friends on BoomTango</p>
+                <div class="invite-container">
+                    <div class="invite-input-group">
+                        <input type="text" id="inviteCode" placeholder="Enter invite code" class="invite-input">
+                        <button onclick="generateInviteLink()" class="btn btn-secondary">Generate Link</button>
+                    </div>
+                    <div id="inviteResult" class="invite-result"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 BoomTango. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="about.html">About Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
