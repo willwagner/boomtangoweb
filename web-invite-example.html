@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boomtango Invite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .download-section {
+            display: none;
+        }
+        
+        .download-section.active {
+            display: block;
+        }
+        
+        .app-store-button {
+            display: inline-block;
+            margin: 10px;
+            width: 150px;
+            height: 50px;
+            background: #000;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        
+        .app-store-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .play-store-button {
+            display: inline-block;
+            margin: 10px;
+            width: 150px;
+            height: 50px;
+            background: #01875f;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        
+        .play-store-button:hover {
+            transform: scale(1.05);
+        }
+        
+        .error {
+            color: #e74c3c;
+            background: #fee;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .error.active {
+            display: block;
+        }
+        
+        .manual-link {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .manual-link a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .manual-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">🎉</div>
+        <h1>Friend Invitation</h1>
+        
+        <div id="loading-section">
+            <p>Opening Boomtango...</p>
+            <div class="spinner"></div>
+            <p style="font-size: 14px; margin-top: 20px;">
+                If the app doesn't open, <a href="#" onclick="showDownload()">click here</a>.
+            </p>
+        </div>
+        
+        <div id="error-section" class="error"></div>
+        
+        <div id="download-section" class="download-section">
+            <p>To accept this friend invitation, install the Boomtango app:</p>
+            
+            <!-- Replace with your actual App Store and Play Store IDs -->
+            <a href="https://apps.apple.com/app/idYOUR_APP_ID" class="app-store-button" id="ios-button">
+                Download on App Store
+            </a>
+            
+            <a href="https://play.google.com/store/apps/details?id=com.boomtango.Boomtango" class="play-store-button" id="android-button" style="display: none;">
+                Get it on Google Play
+            </a>
+            
+            <div class="manual-link">
+                <p style="font-size: 14px;">
+                    After installing, you can accept this invitation from the app.<br>
+                    Or click <a href="#" onclick="tryAgain()">here</a> to try opening the app again.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Extract invite code from URL
+        function getInviteCode() {
+            // Try path-based: /invite/{code}
+            const pathMatch = window.location.pathname.match(/\/invite\/([a-zA-Z0-9]{12})/);
+            if (pathMatch) {
+                return pathMatch[1];
+            }
+            
+            // Try query parameter: ?inviteCode={code}
+            const params = new URLSearchParams(window.location.search);
+            const code = params.get('inviteCode');
+            if (code && /^[a-zA-Z0-9]{12}$/.test(code)) {
+                return code;
+            }
+            
+            return null;
+        }
+
+        // Detect device type
+        function getDeviceType() {
+            const ua = navigator.userAgent || navigator.vendor || window.opera;
+            
+            if (/android/i.test(ua)) {
+                return 'android';
+            }
+            
+            if (/iPad|iPhone|iPod/.test(ua) && !window.MSStream) {
+                return 'ios';
+            }
+            
+            return 'other';
+        }
+
+        // Show download section and hide loading
+        function showDownload() {
+            document.getElementById('loading-section').style.display = 'none';
+            document.getElementById('download-section').classList.add('active');
+            
+            // Show appropriate download button based on device
+            const device = getDeviceType();
+            if (device === 'ios') {
+                document.getElementById('ios-button').style.display = 'inline-flex';
+            } else if (device === 'android') {
+                document.getElementById('android-button').style.display = 'inline-flex';
+            } else {
+                // Show both for desktop
+                document.getElementById('ios-button').style.display = 'inline-flex';
+                document.getElementById('android-button').style.display = 'inline-flex';
+            }
+            
+            // Store invite code for when app opens
+            const inviteCode = getInviteCode();
+            if (inviteCode) {
+                localStorage.setItem('pendingInviteCode', inviteCode);
+            }
+        }
+
+        // Try to open app again
+        function tryAgain() {
+            const inviteCode = getInviteCode();
+            if (!inviteCode) {
+                showError('Invalid invite code');
+                return;
+            }
+            
+            // Hide download, show loading
+            document.getElementById('download-section').classList.remove('active');
+            document.getElementById('loading-section').style.display = 'block';
+            
+            // Try to open app
+            attemptOpenApp(inviteCode);
+        }
+
+        // Attempt to open the app
+        function attemptOpenApp(inviteCode) {
+            const appLink = `boomtango://invite/${inviteCode}`;
+            
+            // Try to open app
+            window.location.href = appLink;
+            
+            // Fallback: If app doesn't open within 2 seconds, show download
+            setTimeout(function() {
+                // Check if page is still focused (app didn't open)
+                if (document.hasFocus() || document.hidden === false) {
+                    showDownload();
+                }
+            }, 2000);
+        }
+
+        // Show error message
+        function showError(message) {
+            const errorSection = document.getElementById('error-section');
+            errorSection.textContent = message;
+            errorSection.classList.add('active');
+            document.getElementById('loading-section').style.display = 'none';
+        }
+
+        // On page load
+        window.addEventListener('load', function() {
+            const inviteCode = getInviteCode();
+            
+            if (!inviteCode) {
+                showError('Invalid invite link. Please check the link and try again.');
+                return;
+            }
+            
+            // Validate invite code format (12 Base62 characters)
+            if (!/^[a-zA-Z0-9]{12}$/.test(inviteCode)) {
+                showError('Invalid invite code format.');
+                return;
+            }
+            
+            // Attempt to open app
+            attemptOpenApp(inviteCode);
+        });
+
+        // Handle app coming back to foreground (iOS Safari)
+        document.addEventListener('visibilitychange', function() {
+            if (!document.hidden) {
+                // Page is visible again - app might have opened and closed
+                // Wait a bit and check if we should show download
+                setTimeout(function() {
+                    if (document.hasFocus()) {
+                        const loadingSection = document.getElementById('loading-section');
+                        if (loadingSection.style.display !== 'none') {
+                            showDownload();
+                        }
+                    }
+                }, 500);
+            }
+        });
+    </script>
+</body>
+</html>

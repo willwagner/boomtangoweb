@@ -1,0 +1,13 @@
+{
+    "applinks": {
+        "apps": [],
+        "details": [
+            {
+                "appID": "42L7Z43YGA.com.boomtango.Boomtango",
+                "paths": [
+                    "/invite/*"
+                ]
+            }
+        ]
+    }
+}

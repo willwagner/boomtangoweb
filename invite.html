@@ -76,7 +76,10 @@
             }
             
             if (inviteCode) {
-                handleInviteLink(inviteCode);
+                // With Universal Links, we just need to wait
+                // The system will automatically open the app if configured
+                // If not configured, try fallback to custom scheme
+                handleUniversalLink(inviteCode);
             } else {
                 document.getElementById('inviteContent').innerHTML = `
                     <h1>Invalid Invite Link</h1>
@@ -85,6 +88,45 @@
                 `;
             }
         });
+
+        // Handle Universal Link (iOS/Android will intercept if configured)
+        function handleUniversalLink(inviteCode) {
+            // Universal Links work automatically - if the app is installed and configured,
+            // iOS/Android will intercept the HTTPS link and open the app directly
+            // No JavaScript redirect needed!
+            
+            // However, if Universal Links aren't set up yet, try fallback to custom scheme
+            setTimeout(function() {
+                // If we're still here after a moment and Universal Links didn't work,
+                // try the custom scheme as fallback
+                if (document.hasFocus()) {
+                    // Try custom scheme fallback
+                    const deepLink = `boomtango://invite/${encodeURIComponent(inviteCode)}`;
+                    window.location.href = deepLink;
+                    
+                    // Final fallback: show download page after 2 seconds
+                    setTimeout(function() {
+                        if (document.hasFocus()) {
+                            showDownloadPage(inviteCode);
+                        }
+                    }, 2000);
+                }
+            }, 500);
+        }
+
+        function showDownloadPage(inviteCode) {
+            const inviteContent = document.getElementById('inviteContent');
+            inviteContent.innerHTML = `
+                <h1>Get BoomTango</h1>
+                <p>To accept this friend invitation, install the BoomTango app:</p>
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="https://apps.apple.com/app/boomtango" class="btn btn-primary" target="_blank" rel="noopener noreferrer" style="margin: 0.5rem;">Download on App Store</a>
+                </div>
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-light);">
+                    After installing, open this link again to accept the invitation.
+                </p>
+            `;
+        }
     </script>
 </body>
 </html>
